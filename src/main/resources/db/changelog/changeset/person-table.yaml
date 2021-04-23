@@ -1,0 +1,99 @@
+databaseChangeLog:
+  - changeSet:
+      id: craete-person-table
+      author: Sergio Martin Rubio
+      changes:
+        - createTable:
+            tableName: person
+            columns:
+              - column:
+                  name: id
+                  type: varchar(255)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: customer_id
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_person_document
+                    references: document(customer_id)
+              - column:
+                  name: last_name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: first_name
+                  type: varchar(255)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: aliases
+                  type: varchar(255)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: category
+                  type: varchar(255)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: position
+                  type: varchar(255)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: keywords
+                  type: varchar(255)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: entered
+                  type: date
+                  constraints:
+                    nullable: true
+              - column:
+                  name: updated
+                  type: date
+                  constraints:
+                    nullable: true
+  - changeSet:
+      id: change-aliases-column-type
+      author: Sergio Martin Rubio
+      changes:
+        - modifyDataType:
+            columnName: aliases
+            newDataType: clob
+            tableName: person
+  - changeSet:
+      id: increase-keywords-column-size
+      author: Sergio Martin Rubio
+      changes:
+        - modifyDataType:
+            columnName: keywords
+            newDataType: varchar(512)
+            tableName: person
+  - changeSet:
+      id: drop-primary-key
+      author: Sergio Martin Rubio
+      changes:
+        - dropPrimaryKey:
+            dropIndex: true
+            tableName: person
+  - changeSet:
+      id: drop-foreign-key
+      author: Sergio Martin Rubio
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: person
+            constraintName: fk_person_document
+  - changeSet:
+      id: change-keywords-column-type-to-clob
+      author: Sergio Martin Rubio
+      changes:
+        - modifyDataType:
+            columnName: keywords
+            newDataType: clob
+            tableName: person
